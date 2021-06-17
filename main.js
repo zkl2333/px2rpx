@@ -104,14 +104,6 @@ const render = $ => {
 		"font-family:Consolas,Monaco,'Courier New',Helvetica;font-size:30px;color:#000;line-height:25px;",
 		'color:#333;line-height:30px'
 	);
-	//pageview
-	var _hmt = _hmt || [];
-	(function () {
-		var hm = document.createElement('script');
-		hm.src = 'https://hm.baidu.com/hm.js?ad7ab8f27224c9122425846bc2bed779';
-		var s = document.getElementsByTagName('script')[0];
-		s.parentNode.insertBefore(hm, s);
-	})();
 	return Promise.resolve();
 };
 
