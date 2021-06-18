@@ -40,10 +40,10 @@ const render = $ => {
 				);
 			}
 		}
-		if ($('#designWidth').val() == 375) {
+		if ($('#designWidth').val() == 750) {
 			tips(
 				successDom,
-				'主人，转换任务已经全部达成 :p。再偷偷告诉你，如果设计稿是375px,可以直接1比1写wxss哦~'
+				'主人，转换任务已经全部达成 :p。再偷偷告诉你，如果设计稿是750px,可以直接1比1写wxss哦~'
 			);
 		} else {
 			tips(successDom, '主人，转换任务已经全部达成 :p');
@@ -54,9 +54,9 @@ const render = $ => {
 		dw = $('#designWidth').val();
 
 		if (toUnit == 'rpx') {
-			return parseFloat((num * (375 / dw)).toFixed(2)) + 'rpx';
+			return parseFloat((num * (750 / dw)).toFixed(2)) + 'rpx';
 		} else {
-			return parseFloat((num * (dw / 375)).toFixed(2)) + 'px';
+			return parseFloat((num * (dw / 750)).toFixed(2)) + 'px';
 		}
 	}
 	function tips(dom, text) {
@@ -107,6 +107,7 @@ const render = $ => {
 	return Promise.resolve();
 };
 
+
 (global => {
 	global['purehtml'] = {
 		bootstrap: () => {
@@ -115,7 +116,6 @@ const render = $ => {
 		},
 		mount: () => {
 			console.log('purehtml mount');
-			return render($);
 		},
 		unmount: () => {
 			console.log('purehtml unmount');
@@ -123,3 +123,5 @@ const render = $ => {
 		}
 	};
 })(window);
+
+render($)
