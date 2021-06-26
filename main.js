@@ -1,4 +1,5 @@
 const render = $ => {
+	console.log('px2rpx render');
 	var convertBeforeDom = $('#convert_before');
 	var convertDoneDom = $('#convert_done');
 	var convertBeforeVal = '';
@@ -98,30 +99,26 @@ const render = $ => {
 			return s == null ? '' : s[1];
 		}
 	};
-	//console
-	console.log(
-		'\n%cPx/Rpx互转换工具 \n%cTodo:批量转换',
-		"font-family:Consolas,Monaco,'Courier New',Helvetica;font-size:30px;color:#000;line-height:25px;",
-		'color:#333;line-height:30px'
-	);
 	return Promise.resolve();
 };
 
-
-(global => {
-	global['purehtml'] = {
-		bootstrap: () => {
-			console.log('purehtml bootstrap');
-			return Promise.resolve();
-		},
-		mount: () => {
-			console.log('purehtml mount');
-		},
-		unmount: () => {
-			console.log('purehtml unmount');
-			return Promise.resolve();
-		}
-	};
-})(window);
-
-render($)
+if (!window['__POWERED_BY_QIANKUN__']) {
+	render($);
+} else {
+	(global => {
+		global['purehtml'] = {
+			bootstrap: () => {
+				console.log('purehtml bootstrap');
+				return Promise.resolve();
+			},
+			mount: () => {
+				console.log('purehtml mount');
+				render($);
+			},
+			unmount: () => {
+				console.log('purehtml unmount');
+				return Promise.resolve();
+			}
+		};
+	})(window);
+}
