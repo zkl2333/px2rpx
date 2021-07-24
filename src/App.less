@@ -1,0 +1,38 @@
+.fill-screen {
+	min-height: 100vh;
+}
+
+.header {
+	color: #fff;
+	font-size: 20px;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	.content-background {
+		flex: 1;
+		background: #fff;
+		padding: 24px;
+		display: flex;
+		justify-content: space-between;
+		.input,
+		.output,
+		.ast {
+			position: relative;
+			flex: auto;
+			margin: 10px;
+			h2 {
+				margin: 0;
+			}
+			.inner-box {
+				overflow-y: auto;
+				position: absolute;
+				top: 40px;
+				bottom: 0;
+				left: 0;
+				right: 0;
+			}
+		}
+	}
+}
