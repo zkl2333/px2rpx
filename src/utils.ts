@@ -1,5 +1,5 @@
 import csstree from 'css-tree';
-import prettier from 'prettier';
+import { format } from 'prettier';
 import parserPostcss from 'prettier/parser-postcss';
 
 const formatOptions = { semi: true, useTabs: true };
@@ -11,7 +11,7 @@ export const getAstClone = (css: string) => {
 
 export const formatCss = (cssString: string): string => {
 	try {
-		return prettier.format(cssString, {
+		return format(cssString, {
 			...formatOptions,
 			parser: 'css',
 			plugins: [parserPostcss]
