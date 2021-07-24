@@ -9,6 +9,7 @@ const { Header, Content, Footer } = Layout;
 function App() {
 	const [cssSource, setCssSource] = useState('.foo { font-size: 12px }');
 	const [showAst, setShowAst] = useState(false);
+	const [format, setFormat] = useState(true);
 	const [designWidth, setDesignWidth] = useState(414);
 
 	return (
@@ -25,7 +26,14 @@ function App() {
 								unCheckedChildren="关闭"
 							/>
 						</Form.Item>
-
+						<Form.Item label="格式化">
+							<Switch
+								checked={format}
+								onChange={setFormat}
+								checkedChildren="开启"
+								unCheckedChildren="关闭"
+							/>
+						</Form.Item>
 						<Form.Item label="设计稿尺寸">
 							<Input
 								suffix="px"
@@ -56,7 +64,7 @@ function App() {
 					<div className="output">
 						<h2>输出</h2>
 						<pre className="inner-box">
-							<code>{px2rpx(cssSource, 750 / designWidth)}</code>
+							<code>{px2rpx(cssSource, { scale: 750 / designWidth, format })}</code>
 						</pre>
 					</div>
 				</div>
