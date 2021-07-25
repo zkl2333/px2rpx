@@ -1,5 +1,5 @@
 import postcss from 'postcss';
-import postcssPx2rpxPlugin from '../packages/postcss-px2rpx';
+import postcssPx2rpxPlugin from 'postcss-px2rpx-plugin';
 
 const formatOptions = { semi: true };
 
