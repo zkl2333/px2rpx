@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.less';
 import { Layout, Input, Switch, Form } from 'antd';
 import { getAstClone, px2rpx } from './utils';
@@ -7,10 +7,29 @@ const { TextArea } = Input;
 const { Header, Content, Footer } = Layout;
 
 function App() {
-	const [cssSource, setCssSource] = useState('.foo { font-size: 12px }');
+	const [cssSource, setCssSource] = useState(`/* 使用注释标记 scale: number 会覆盖外部参数 */
+/* scale: 2 */
+@media screen and (min-width: 480px) {
+   body {
+	   background-color: lightgreen;
+   }
+}
+
+#main {
+   border: 1px solid black; 
+}
+
+ul li {
+   padding: 5px;
+}`);
 	const [showAst, setShowAst] = useState(false);
-	const [format, setFormat] = useState(true);
+	const [format, setFormat] = useState(false);
 	const [designWidth, setDesignWidth] = useState(414);
+	const [output, setOutput] = useState('');
+
+	useEffect(() => {
+		px2rpx(cssSource, { scale: 750 / designWidth, format }).then(setOutput);
+	}, [cssSource, format, designWidth]);
 
 	return (
 		<Layout className="fill-screen">
@@ -64,7 +83,7 @@ function App() {
 					<div className="output">
 						<h2>输出</h2>
 						<pre className="inner-box">
-							<code>{px2rpx(cssSource, { scale: 750 / designWidth, format })}</code>
+							<code>{output}</code>
 						</pre>
 					</div>
 				</div>

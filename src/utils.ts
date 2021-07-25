@@ -1,17 +1,20 @@
-import csstree from 'css-tree';
-import { format } from 'prettier';
-import parserPostcss from 'prettier/parser-postcss';
+import postcss from 'postcss';
+import postcssPx2rpxPlugin from '../packages/postcss-px2rpx';
 
-const formatOptions = { semi: true, useTabs: true };
+const formatOptions = { semi: true };
 
+// 获取 AST
 export const getAstClone = (css: string) => {
-	const ast = csstree.parse(css);
-	return csstree.clone(ast);
+	const ast = postcss.parse(css).clone();
+	return ast;
 };
 
-export const formatCss = (cssString: string): string => {
+// 格式化
+export const formatCss = async (cssString: string): Promise<string> => {
+	const prettier = await import('prettier');
+	const parserPostcss = await import('prettier/parser-postcss');
 	try {
-		return format(cssString, {
+		return prettier.format(cssString, {
 			...formatOptions,
 			parser: 'css',
 			plugins: [parserPostcss]
@@ -21,18 +24,16 @@ export const formatCss = (cssString: string): string => {
 	}
 };
 
-export const px2rpx = (css: string, options: { scale: number; format?: boolean }) => {
+// 转化
+export const px2rpx = async (
+	css: string,
+	options: { scale: number; format?: boolean }
+): Promise<string> => {
 	try {
-		const astClone = getAstClone(css);
-		csstree.walk(astClone, function (node) {
-			if (node.type === 'Dimension' && node.unit === 'px') {
-				node.value = Number((Number(node.value) * options.scale).toFixed(3)).toString();
-				node.unit = 'rpx';
-			}
-		});
-		const output = csstree.generate(astClone);
+		const output = await postcss([postcssPx2rpxPlugin({ scale: options.scale })]).process(css)
+			.css;
 		if (options.format) {
-			return formatCss(output);
+			return await formatCss(output);
 		}
 		return output;
 	} catch (error) {
