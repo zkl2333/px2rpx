@@ -1,5 +1,5 @@
 {
-	"name": "postcss-px2rpx",
+	"name": "postcss-px2rpx-plugin",
 	"version": "0.0.2",
 	"description": "> TODO: description",
 	"author": "zkl2333 <i@zkl2333.com>",
