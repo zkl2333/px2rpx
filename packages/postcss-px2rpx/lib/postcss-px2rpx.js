@@ -14,8 +14,8 @@ export default postcss.plugin('postcss-px2rpx-plugin', (options = {}) => {
 			} else if (value) {
 				let reg = /(\d)+(px)/gi;
 				let newValue = value.replace(reg, function (s) {
-					const number = s.replace(/px/i, '');
-					return number * scale + 'rpx';
+					const number = Number(s.replace(/px/i, ''));
+					return (number * scale).toFixed(3) + 'rpx';
 				});
 				decl.value = newValue;
 			}
