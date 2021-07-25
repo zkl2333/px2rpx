@@ -1,6 +1,6 @@
 {
 	"name": "postcss-px2rpx-plugin",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "将 px 转化为 rpx 的 postcss 插件",
 	"author": "zkl2333 <i@zkl2333.com>",
 	"homepage": "https://github.com/zkl2333/px2rpx#readme",
