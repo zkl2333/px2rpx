@@ -15,8 +15,8 @@ jobs:
                   npm i
                   npm run build
 
-            - name: fix 单页应用路由问题
-              run: cp ./dist/index.html ./dist/404.html
+            # - name: fix 单页应用路由问题
+            #   run: cp ./dist/index.html ./dist/404.html
 
             - name: 部署
               uses: peaceiris/actions-gh-pages@v3
