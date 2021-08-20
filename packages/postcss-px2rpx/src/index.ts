@@ -22,7 +22,7 @@ const plugin = (options: { scale?: number; ignoreSmallPixels?: boolean }): postc
 		Declaration: decl => {
 			const { value } = decl;
 			if (value) {
-				let reg = /(\d)+(px)/gi;
+				let reg = /(\d+(\.\d+){0,1}(px))/gi;
 				let newValue = value.replace(reg, function (s) {
 					const number = Number(s.replace(/px/i, ''));
 					if (options.ignoreSmallPixels && number <= 1) {
