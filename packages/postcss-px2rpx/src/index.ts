@@ -26,7 +26,7 @@ const plugin = (options: { scale?: number; ignoreSmallPixels?: boolean }): postc
 				let newValue = value.replace(reg, function (s) {
 					const number = Number(s.replace(/px/i, ''));
 					if (options.ignoreSmallPixels && number <= 1) {
-						return value;
+						return number + 'px';
 					}
 					return scaleHandler(number, scale) + 'rpx';
 				});

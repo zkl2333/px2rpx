@@ -20,6 +20,7 @@ export const formatCss = async (cssString: string): Promise<string> => {
 			plugins: [parserPostcss]
 		});
 	} catch (error) {
+		console.error(error);
 		return error.toString();
 	}
 };
@@ -41,6 +42,7 @@ export const px2rpx = async (
 		}
 		return output;
 	} catch (error) {
+		console.error(error);
 		return error.toString();
 	}
 };
