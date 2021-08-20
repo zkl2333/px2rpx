@@ -10,7 +10,7 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: {
-			prettier: 'https://esm.sh/prettier'
+			// prettier: 'https://esm.sh/prettier'
 		}
 	},
 	build: {

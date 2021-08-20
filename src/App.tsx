@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.less';
-import { Layout, Input, Switch, Form } from 'antd';
+import { Layout, Input, Switch, Form, Spin } from 'antd';
 import { getAstClone, px2rpx } from './utils';
 
 const { TextArea } = Input;
@@ -26,10 +26,17 @@ ul li {
 	const [format, setFormat] = useState(false);
 	const [designWidth, setDesignWidth] = useState(414);
 	const [output, setOutput] = useState('');
+	const [loading, setLoading] = useState(false);
+	const [ignoreSmallPixels, setIgnoreSmallPixels] = useState(false);
 
 	useEffect(() => {
-		px2rpx(cssSource, { scale: 750 / designWidth, format }).then(setOutput);
-	}, [cssSource, format, designWidth]);
+		setLoading(true);
+		px2rpx(cssSource, { scale: 750 / designWidth, format, ignoreSmallPixels })
+			.then(setOutput)
+			.then(() => {
+				setLoading(false);
+			});
+	}, [cssSource, format, designWidth, ignoreSmallPixels]);
 
 	return (
 		<Layout className="fill-screen">
@@ -45,10 +52,10 @@ ul li {
 								unCheckedChildren="关闭"
 							/>
 						</Form.Item>
-						<Form.Item label="格式化">
+						<Form.Item label="忽略小像素">
 							<Switch
-								checked={format}
-								onChange={setFormat}
+								checked={ignoreSmallPixels}
+								onChange={setIgnoreSmallPixels}
 								checkedChildren="开启"
 								unCheckedChildren="关闭"
 							/>
@@ -59,6 +66,14 @@ ul li {
 								value={designWidth}
 								style={{ width: '80px' }}
 								onChange={event => setDesignWidth(Number(event.target.value))}
+							/>
+						</Form.Item>
+						<Form.Item label="格式化">
+							<Switch
+								checked={format}
+								onChange={setFormat}
+								checkedChildren="开启"
+								unCheckedChildren="关闭"
 							/>
 						</Form.Item>
 					</Form>
@@ -83,7 +98,9 @@ ul li {
 					<div className="output">
 						<h2>输出</h2>
 						<pre className="inner-box">
-							<code>{output}</code>
+							<Spin spinning={loading} delay={500}>
+								<code>{output}</code>
+							</Spin>
 						</pre>
 					</div>
 				</div>

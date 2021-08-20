@@ -27,11 +27,15 @@ export const formatCss = async (cssString: string): Promise<string> => {
 // 转化
 export const px2rpx = async (
 	css: string,
-	options: { scale: number; format?: boolean }
+	options: { scale: number; ignoreSmallPixels?: boolean; format?: boolean }
 ): Promise<string> => {
 	try {
-		const output = await postcss([postcssPx2rpxPlugin({ scale: options.scale })]).process(css)
-			.css;
+		const output = await postcss([
+			postcssPx2rpxPlugin({
+				scale: options.scale,
+				ignoreSmallPixels: options.ignoreSmallPixels
+			})
+		]).process(css).css;
 		if (options.format) {
 			return await formatCss(output);
 		}

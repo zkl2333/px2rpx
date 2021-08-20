@@ -6,7 +6,7 @@ const scaleHandler = (number: number, scale: number) => {
 	return Number((number * scale).toFixed(3));
 };
 
-const plugin = (options: { scale?: number }): postcss.Plugin => {
+const plugin = (options: { scale?: number; ignoreSmallPixels?: boolean }): postcss.Plugin => {
 	if (options.scale) {
 		scale = options.scale;
 	}
@@ -25,6 +25,9 @@ const plugin = (options: { scale?: number }): postcss.Plugin => {
 				let reg = /(\d)+(px)/gi;
 				let newValue = value.replace(reg, function (s) {
 					const number = Number(s.replace(/px/i, ''));
+					if (options.ignoreSmallPixels && number <= 1) {
+						return value;
+					}
 					return scaleHandler(number, scale) + 'rpx';
 				});
 				decl.value = newValue;
